@@ -13,6 +13,7 @@
 		CF37594428D3B2D1007EA29F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF37594228D3B2D1007EA29F /* Main.storyboard */; };
 		CF37594628D3B2D3007EA29F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF37594528D3B2D3007EA29F /* Assets.xcassets */; };
 		CF37594928D3B2D3007EA29F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF37594728D3B2D3007EA29F /* LaunchScreen.storyboard */; };
+		CFE66AB428E09FCA003CF418 /* video.mov in Resources */ = {isa = PBXBuildFile; fileRef = CFE66AB328E09FCA003CF418 /* video.mov */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		CF37594528D3B2D3007EA29F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CF37594828D3B2D3007EA29F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CF37594A28D3B2D3007EA29F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CFE66AB328E09FCA003CF418 /* video.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; name = video.mov; path = "Trimmer 9000/video.mov"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,6 +42,7 @@
 		CF37593028D3B2D1007EA29F = {
 			isa = PBXGroup;
 			children = (
+				CFE66AB328E09FCA003CF418 /* video.mov */,
 				CF37593B28D3B2D1007EA29F /* Trimmer 9000 */,
 				CF37593A28D3B2D1007EA29F /* Products */,
 			);
@@ -125,6 +128,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFE66AB428E09FCA003CF418 /* video.mov in Resources */,
 				CF37594928D3B2D3007EA29F /* LaunchScreen.storyboard in Resources */,
 				CF37594628D3B2D3007EA29F /* Assets.xcassets in Resources */,
 				CF37594428D3B2D1007EA29F /* Main.storyboard in Resources */,
@@ -295,6 +299,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -323,6 +328,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
