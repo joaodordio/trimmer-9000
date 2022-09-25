@@ -1,24 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Trimmer_9000" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N0k-Y5-CbE">
+                                <rect key="frame" x="133" y="75" width="124" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="124" id="WJl-Tj-6oR"/>
+                                    <constraint firstAttribute="height" constant="31" id="glO-DO-buw"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Load Video" buttonSize="medium"/>
+                                <connections>
+                                    <action selector="pickVideo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XgZ-Mh-bNK"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t8c-MP-mKy" userLabel="PlayerView">
+                                <rect key="frame" x="20" y="146" width="350" height="538"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="TTC-uD-jct" userLabel="Bottom Stack">
+                                <rect key="frame" x="20" y="692" width="350" height="66"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Kmw-35-a5s" userLabel="Controls Stack">
+                                        <rect key="frame" x="0.0" y="0.0" width="350" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GOv-yy-82K" userLabel="Play Button">
+                                                <rect key="frame" x="0.0" y="0.0" width="350" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="HlW-6W-5aw"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" buttonSize="large">
+                                                    <imageReference key="image" image="play.circle" catalog="system" symbolScale="large"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large" weight="bold"/>
+                                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="playPauseVideo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OU9-7a-GQH"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="8O0-RN-p9x"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="NGS-oT-7gb" userLabel="ThumbnailsView">
+                                        <rect key="frame" x="0.0" y="66" width="350" height="0.0"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="80" id="NM0-A6-htX"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Kmw-35-a5s" secondAttribute="trailing" id="HJo-mU-cSl"/>
+                                    <constraint firstItem="NGS-oT-7gb" firstAttribute="leading" secondItem="TTC-uD-jct" secondAttribute="leading" id="VTD-b7-4qd"/>
+                                    <constraint firstAttribute="trailing" secondItem="NGS-oT-7gb" secondAttribute="trailing" id="Y1N-tb-ieT"/>
+                                    <constraint firstItem="Kmw-35-a5s" firstAttribute="leading" secondItem="TTC-uD-jct" secondAttribute="leading" id="YmI-Mh-1Me"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="t8c-MP-mKy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TeD-B7-QMN"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TTC-uD-jct" secondAttribute="trailing" constant="20" id="VvI-qa-OuI"/>
+                            <constraint firstItem="N0k-Y5-CbE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="31" id="XIm-60-nlL"/>
+                            <constraint firstItem="TTC-uD-jct" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Yok-it-vMf"/>
+                            <constraint firstItem="t8c-MP-mKy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="dVz-dX-iaD"/>
+                            <constraint firstItem="N0k-Y5-CbE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="eRJ-1X-dxF"/>
+                            <constraint firstItem="t8c-MP-mKy" firstAttribute="top" secondItem="N0k-Y5-CbE" secondAttribute="bottom" constant="40" id="f7q-Ex-DWN"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="t8c-MP-mKy" secondAttribute="trailing" constant="20" id="fC4-fk-Il5"/>
+                            <constraint firstAttribute="bottom" secondItem="t8c-MP-mKy" secondAttribute="bottom" constant="160" id="p0W-oa-dsR"/>
+                            <constraint firstItem="TTC-uD-jct" firstAttribute="top" secondItem="t8c-MP-mKy" secondAttribute="bottom" constant="8" symbolic="YES" id="u8m-9k-kEJ"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="loadVideoButton" destination="N0k-Y5-CbE" id="gwM-3n-0ty"/>
+                        <outlet property="playButton" destination="GOv-yy-82K" id="XDv-dF-6h3"/>
+                        <outlet property="playerView" destination="t8c-MP-mKy" id="4Wt-pp-1Df"/>
+                        <outlet property="thumbnailsView" destination="NGS-oT-7gb" id="bBB-F0-ica"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="64.615384615384613" y="114.45497630331754"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="play.circle" catalog="system" width="128" height="121"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
