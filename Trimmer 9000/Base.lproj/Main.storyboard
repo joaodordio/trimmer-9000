@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -17,30 +17,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N0k-Y5-CbE">
-                                <rect key="frame" x="133" y="75" width="124" height="31"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="124" id="WJl-Tj-6oR"/>
-                                    <constraint firstAttribute="height" constant="31" id="glO-DO-buw"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Load Video" buttonSize="medium"/>
-                                <connections>
-                                    <action selector="pickVideo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XgZ-Mh-bNK"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t8c-MP-mKy" userLabel="PlayerView">
-                                <rect key="frame" x="20" y="146" width="350" height="538"/>
+                                <rect key="frame" x="20" y="132" width="350" height="405"/>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="TTC-uD-jct" userLabel="Bottom Stack">
-                                <rect key="frame" x="20" y="692" width="350" height="66"/>
+                                <rect key="frame" x="20" y="580" width="350" height="50"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Kmw-35-a5s" userLabel="Controls Stack">
                                         <rect key="frame" x="0.0" y="0.0" width="350" height="50"/>
                                         <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nn8-t9-QLm" userLabel="Restart Button">
+                                                <rect key="frame" x="0.0" y="0.0" width="175" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="HvY-qV-Y56"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" buttonSize="large">
+                                                    <imageReference key="image" image="restart.circle" catalog="system" symbolScale="large"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large" weight="bold"/>
+                                                    <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="restartVideo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nhE-Ro-qut"/>
+                                                </connections>
+                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GOv-yy-82K" userLabel="Play Button">
-                                                <rect key="frame" x="0.0" y="0.0" width="350" height="50"/>
+                                                <rect key="frame" x="175" y="0.0" width="175" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="HlW-6W-5aw"/>
                                                 </constraints>
@@ -59,53 +62,129 @@
                                             <constraint firstAttribute="height" constant="50" id="8O0-RN-p9x"/>
                                         </constraints>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="NGS-oT-7gb" userLabel="ThumbnailsView">
-                                        <rect key="frame" x="0.0" y="66" width="350" height="0.0"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="80" id="NM0-A6-htX"/>
-                                        </constraints>
-                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Kmw-35-a5s" secondAttribute="trailing" id="HJo-mU-cSl"/>
-                                    <constraint firstItem="NGS-oT-7gb" firstAttribute="leading" secondItem="TTC-uD-jct" secondAttribute="leading" id="VTD-b7-4qd"/>
-                                    <constraint firstAttribute="trailing" secondItem="NGS-oT-7gb" secondAttribute="trailing" id="Y1N-tb-ieT"/>
                                     <constraint firstItem="Kmw-35-a5s" firstAttribute="leading" secondItem="TTC-uD-jct" secondAttribute="leading" id="YmI-Mh-1Me"/>
                                 </constraints>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W7Z-CS-3yX">
+                                <rect key="frame" x="91" y="72" width="208" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="208" id="QeQ-sg-msJ"/>
+                                    <constraint firstAttribute="height" constant="40" id="UuG-xa-2wu"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Load custom Video" buttonSize="medium"/>
+                                <connections>
+                                    <action selector="loadCustomVideo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lqd-4Z-qLy"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00s" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gUx-Qt-OoF">
+                                <rect key="frame" x="20" y="545" width="350" height="20.333333333333371"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="NGS-oT-7gb" userLabel="ThumbnailsView">
+                                <rect key="frame" x="20" y="683" width="350" height="50"/>
+                                <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="NM0-A6-htX"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="DFf-3W-L5w" appends="YES" id="xhR-e9-Y7Z"/>
+                                </connections>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W03-u4-ByQ">
+                                <rect key="frame" x="16" y="75" width="67" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="timeline.selection" catalog="system"/>
+                                <connections>
+                                    <action selector="enableTrimmer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CIc-zr-Wm6"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DFd-lm-P6U">
+                                <rect key="frame" x="256" y="755" width="51" height="54"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="">
+                                    <imageReference key="image" image="square.and.arrow.up.circle" catalog="system" symbolScale="large"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large" weight="black"/>
+                                    <color key="baseForegroundColor" systemColor="systemGreenColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="shareVideo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tEm-HJ-LW6"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHa-3T-bZc">
+                                <rect key="frame" x="56" y="765" width="77" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelTrim:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MTf-6r-MNV"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                         <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="DFd-lm-P6U" secondAttribute="bottom" constant="1" id="134-Ii-35O"/>
+                            <constraint firstItem="W7Z-CS-3yX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="25" id="B87-qd-Qs8"/>
+                            <constraint firstItem="gUx-Qt-OoF" firstAttribute="top" secondItem="NGS-oT-7gb" secondAttribute="bottom" constant="-188" id="MEE-RJ-9xO"/>
+                            <constraint firstItem="gUx-Qt-OoF" firstAttribute="trailing" secondItem="NGS-oT-7gb" secondAttribute="trailing" id="Qb1-a5-OGn"/>
+                            <constraint firstItem="NGS-oT-7gb" firstAttribute="trailing" secondItem="TTC-uD-jct" secondAttribute="trailing" id="TbY-cD-7Ns"/>
                             <constraint firstItem="t8c-MP-mKy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TeD-B7-QMN"/>
+                            <constraint firstItem="DFd-lm-P6U" firstAttribute="top" secondItem="NGS-oT-7gb" secondAttribute="bottom" constant="22" id="UB7-rI-vVa"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TTC-uD-jct" secondAttribute="trailing" constant="20" id="VvI-qa-OuI"/>
-                            <constraint firstItem="N0k-Y5-CbE" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="31" id="XIm-60-nlL"/>
                             <constraint firstItem="TTC-uD-jct" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Yok-it-vMf"/>
+                            <constraint firstItem="W7Z-CS-3yX" firstAttribute="centerX" secondItem="t8c-MP-mKy" secondAttribute="centerX" id="aHD-D2-bbh"/>
                             <constraint firstItem="t8c-MP-mKy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="dVz-dX-iaD"/>
-                            <constraint firstItem="N0k-Y5-CbE" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="eRJ-1X-dxF"/>
-                            <constraint firstItem="t8c-MP-mKy" firstAttribute="top" secondItem="N0k-Y5-CbE" secondAttribute="bottom" constant="40" id="f7q-Ex-DWN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="t8c-MP-mKy" secondAttribute="trailing" constant="20" id="fC4-fk-Il5"/>
-                            <constraint firstAttribute="bottom" secondItem="t8c-MP-mKy" secondAttribute="bottom" constant="160" id="p0W-oa-dsR"/>
-                            <constraint firstItem="TTC-uD-jct" firstAttribute="top" secondItem="t8c-MP-mKy" secondAttribute="bottom" constant="8" symbolic="YES" id="u8m-9k-kEJ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DFd-lm-P6U" secondAttribute="trailing" constant="83" id="hL1-d3-Xhs"/>
+                            <constraint firstItem="gUx-Qt-OoF" firstAttribute="leading" secondItem="NGS-oT-7gb" secondAttribute="leading" id="iho-qs-FVl"/>
+                            <constraint firstItem="NGS-oT-7gb" firstAttribute="top" secondItem="TTC-uD-jct" secondAttribute="bottom" constant="53" id="n4s-CO-ZyP"/>
+                            <constraint firstAttribute="bottom" secondItem="t8c-MP-mKy" secondAttribute="bottom" constant="307" id="p0W-oa-dsR"/>
+                            <constraint firstItem="TTC-uD-jct" firstAttribute="top" secondItem="t8c-MP-mKy" secondAttribute="bottom" constant="43" id="u8m-9k-kEJ"/>
+                            <constraint firstItem="t8c-MP-mKy" firstAttribute="top" secondItem="W7Z-CS-3yX" secondAttribute="bottom" constant="20" id="uO2-3c-U7S"/>
+                            <constraint firstItem="NGS-oT-7gb" firstAttribute="leading" secondItem="TTC-uD-jct" secondAttribute="leading" id="xfG-EA-7kY"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="loadVideoButton" destination="N0k-Y5-CbE" id="gwM-3n-0ty"/>
+                        <outlet property="cancelTrimButton" destination="NHa-3T-bZc" id="EbO-M6-YnK"/>
+                        <outlet property="currentTimeLabel" destination="gUx-Qt-OoF" id="eGL-C3-qns"/>
+                        <outlet property="loadCustomVideoButton" destination="W7Z-CS-3yX" id="m1q-4D-ugl"/>
                         <outlet property="playButton" destination="GOv-yy-82K" id="XDv-dF-6h3"/>
                         <outlet property="playerView" destination="t8c-MP-mKy" id="4Wt-pp-1Df"/>
+                        <outlet property="restartButton" destination="Nn8-t9-QLm" id="bi5-HU-R4l"/>
+                        <outlet property="shareButton" destination="DFd-lm-P6U" id="KI7-Yo-g4Q"/>
                         <outlet property="thumbnailsView" destination="NGS-oT-7gb" id="bBB-F0-ica"/>
+                        <outlet property="trimButton" destination="W03-u4-ByQ" id="lxf-Ed-dee"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="DFf-3W-L5w">
+                    <connections>
+                        <action selector="userScrubbed:" destination="BYZ-38-t0r" id="Nk0-kE-lcx"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="64.615384615384613" y="114.45497630331754"/>
         </scene>
     </scenes>
     <resources>
-        <image name="play.circle" catalog="system" width="128" height="121"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <image name="play.circle" catalog="system" width="128" height="123"/>
+        <image name="restart.circle" catalog="system" width="128" height="123"/>
+        <image name="square.and.arrow.up.circle" catalog="system" width="128" height="123"/>
+        <image name="timeline.selection" catalog="system" width="128" height="67"/>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
