@@ -9,7 +9,7 @@ import UIKit
 import AVKit
 import PhotosUI
 
-class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
+class ViewController: UIViewController {
     
     @IBOutlet weak var playerView: UIView!
     @IBOutlet weak var thumbnailsView: UIStackView!
@@ -60,77 +60,7 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
     }
     
     // MARK: - UI Actions
-    
-    @IBAction func userScrubbed(_ gestureRecognizer : UIPanGestureRecognizer) {
-        guard gestureRecognizer.view != nil else {return}
-        
-        pause()
-        
-        let position = gestureRecognizer.location(in: thumbnailsView)
-        if gestureRecognizer.state == .changed || gestureRecognizer.state == .began {
-            var x = position.x
-            if x < 0 { x = 0 }
-            if x > thumbnailsView.frame.width - 4 { x = thumbnailsView.frame.width - 4 }
-            
-            let newCenter = CGPoint(x: x, y: indicatorView.frame.origin.y)
-            indicatorView.frame.origin = newCenter
-            
-            let timeToSeek = (x * endTime.seconds) / thumbnailsView.frame.width
-            
-            let time = CMTime(seconds: timeToSeek, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-            player.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero)
-        }
-        else if gestureRecognizer.state == .ended {
-            
-        }
-    }
-    
-    @objc func trimLeft(_ gestureRecognizer : UIPanGestureRecognizer) {
-        guard gestureRecognizer.view != nil else {return}
-        
-        let position = gestureRecognizer.location(in: thumbnailsView)
-        if gestureRecognizer.state == .changed || gestureRecognizer.state == .began {
-            var x = position.x
-            if x < 0 { x = 0 }
-            if x > thumbnailsView.frame.width - 40 { x = thumbnailsView.frame.width - 40 }
-            
-            let newCenter = CGPoint(x: x, y: leftHandleView.frame.origin.y)
-            trimmedStartLabel.isHidden = false
-            trimmedStartLabel.frame.origin.x = x
-            leftHandleView.frame.origin = newCenter
-            
-            let timeToSeek = (x * endTime.seconds) / thumbnailsView.frame.width
-            trimmedStartLabel.text = String(format: "%.2fs", timeToSeek)
-            
-            trimmedStart = CMTime(seconds: timeToSeek, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        } else if gestureRecognizer.state == .ended {
-            trimmedStartLabel.isHidden = true
-        }
-    }
-    
-    @objc func trimRight(_ gestureRecognizer : UIPanGestureRecognizer) {
-        guard gestureRecognizer.view != nil else {return}
-        
-        let position = gestureRecognizer.location(in: thumbnailsView)
-        if gestureRecognizer.state == .changed || gestureRecognizer.state == .began {
-            var x = position.x
-            if x < 0 { x = 0 }
-            if x > thumbnailsView.frame.width - 40 { x = thumbnailsView.frame.width - 40 }
-            
-            let newCenter = CGPoint(x: x, y: rightHandleView.frame.origin.y)
-            trimmedEndLabel.isHidden = false
-            trimmedEndLabel.frame.origin.x = x
-            
-            rightHandleView.frame.origin = newCenter
-            
-            let timeToSeek = (x * endTime.seconds) / thumbnailsView.frame.width
-            trimmedEndLabel.text = String(format: "%.2fs", timeToSeek)
-            
-            trimmedEnd = CMTime(seconds: timeToSeek, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
-        } else if gestureRecognizer.state == .ended {
-            trimmedEndLabel.isHidden = true
-        }
-    }
+    // MARK: - Playback
     
     @IBAction func playPauseVideo(_ sender: Any) {
         isPlaying ? pause() : play()
@@ -146,34 +76,133 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
         loadVideo(videoURL: customVideoURL)
     }
     
+    // MARK: - Gestures
+    
+    @IBAction func userScrubbed(_ gestureRecognizer : UIPanGestureRecognizer) {
+        guard gestureRecognizer.view != nil else { return }
+        
+        pause()
+        
+        let position = gestureRecognizer.location(in: thumbnailsView) // I'm using the thumbnailsView as a reference
+        
+        if gestureRecognizer.state == .changed || gestureRecognizer.state == .began {
+            var x = position.x
+            
+            if x < 0 { x = 0 } // limit the scrub on the left bounds
+            if x > thumbnailsView.frame.width - 4 { x = thumbnailsView.frame.width - 4 } // limit the scrub on the right bounds
+            
+            let newCenter = CGPoint(x: x, y: indicatorView.frame.origin.y) // just update the x coordinate to get an horizontal movement
+            indicatorView.frame.origin = newCenter
+            
+            let timeToSeek = (x * endTime.seconds) / thumbnailsView.frame.width
+            
+            let time = CMTime(seconds: timeToSeek, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+            player.seek(to: time, toleranceBefore: .zero, toleranceAfter: .zero) // actual player scrubbing
+        }
+        else if gestureRecognizer.state == .ended {
+            // I would update the playehead position at this time.
+        }
+    }
+    
+    @objc func trimLeft(_ gestureRecognizer : UIPanGestureRecognizer) {
+        guard gestureRecognizer.view != nil else {return}
+        
+        let position = gestureRecognizer.location(in: thumbnailsView) // I'm using the thumbnailsView as a reference
+        if gestureRecognizer.state == .changed || gestureRecognizer.state == .began {
+            var x = position.x
+            
+            let handleOffset = CGFloat(40)
+            
+            if x < 0 { x = 0 } // limit the scrub on the left bounds
+            if x > thumbnailsView.frame.width - handleOffset { x = thumbnailsView.frame.width - handleOffset } // limit the scrub on the right bounds.
+            
+            let newCenter = CGPoint(x: x, y: leftHandleView.frame.origin.y)
+            
+            let timeToSeek = (x * endTime.seconds) / thumbnailsView.frame.width
+            
+            trimmedStartLabel.isHidden = false // trimmed time label is made visible. could use some animation here
+            trimmedStartLabel.frame.origin.x = x // its position updated
+            
+            trimmedStartLabel.text = String(format: "%.2fs", timeToSeek)
+            leftHandleView.frame.origin = newCenter
+            
+            // update the value here for later usage when exporting
+            trimmedStart = CMTime(seconds: timeToSeek, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        } else if gestureRecognizer.state == .ended {
+            // this could be done with an animation block
+            trimmedStartLabel.isHidden = true
+        }
+    }
+    
+    @objc func trimRight(_ gestureRecognizer : UIPanGestureRecognizer) {
+        guard gestureRecognizer.view != nil else {return}
+        
+        let position = gestureRecognizer.location(in: thumbnailsView)
+        if gestureRecognizer.state == .changed || gestureRecognizer.state == .began {
+            
+            let handleOffset = CGFloat(40)
+            
+            var x = position.x
+            
+            if x < 0 { x = 0 } // limit the scrub on the left bounds
+            if x > thumbnailsView.frame.width - handleOffset { x = thumbnailsView.frame.width - handleOffset } // limit the scrub on the right bounds.
+            
+            let newCenter = CGPoint(x: x, y: rightHandleView.frame.origin.y)
+            
+            rightHandleView.frame.origin = newCenter
+            
+            let timeToSeek = (x * endTime.seconds) / thumbnailsView.frame.width
+            
+            trimmedEndLabel.isHidden = false // trimmed time label is made visible. could use some animation here
+            trimmedEndLabel.frame.origin.x = x // its position updated
+            trimmedEndLabel.text = String(format: "%.2fs", timeToSeek)
+            
+            // update the value here for later usage when exporting
+            trimmedEnd = CMTime(seconds: timeToSeek, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        } else if gestureRecognizer.state == .ended {
+            // this could be done with an animation block
+            trimmedEndLabel.isHidden = true
+        }
+    }
+    
+    // MARK: - Trimmer
+    
     @IBAction func enableTrimmer(_ sender: Any) {
-        stop()
+        stop() // intentionally stop the playback
+        
+        //update views state
         isTrimming = true
-        configureTrimmer()
         trimButton.isEnabled = false
         shareButton.isHidden = false
         cancelTrimButton.isHidden = false
+        
+        configureTrimmer()
     }
     
     @IBAction func cancelTrim(_ sender: Any) {
-        trimmerView.removeFromSuperview()
+        //update views state
         isTrimming = false
         trimButton.isEnabled = true
         cancelTrimButton.isHidden = true
         shareButton.isHidden = true
+        
+        trimmerView.removeFromSuperview()
     }
     
     @IBAction func shareVideo(_ sender: Any) {
         guard let outputVideoURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("trimmed.mov") else { return }
         
-        let timeRange = CMTimeRangeFromTimeToTime(start: trimmedStart, end: trimmedEnd)
-        
+        // Ensure that no older file is present, which would prevent the new one to be saved.
         do {
             try FileManager.default.removeItem(at: outputVideoURL)
         } catch {
             print("Could not remove file \(error.localizedDescription)")
         }
         
+        // create the new trimmed range
+        let timeRange = CMTimeRangeFromTimeToTime(start: trimmedStart, end: trimmedEnd)
+        
+        // setup the export task
         let exporter = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetHighestQuality)
         
         exporter?.outputURL = outputVideoURL
@@ -185,32 +214,40 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
                 if let error = exporter?.error {
                     print("failed \(error.localizedDescription)")
                 } else {
-                    self.shareVideoFile(outputVideoURL)
+                    self.shareVideoFile(outputVideoURL) // calls the iOS Sharesheet
                 }
             }
         }
     }
+    
     // MARK: - Player Actions
     
+    /// Starts playback of the player at the current position
     private func play() {
+        
+        // adjust the playhead to the trimmed position
         if isTrimming {
             player.seek(to: trimmedStart, toleranceBefore: .zero, toleranceAfter: .zero)
         }
+        
         player.play()
         isPlaying = true
         playButton.setImage(isPlaying ? UIImage(systemName: "pause.circle") : UIImage(systemName: "play.circle"), for: .normal)
     }
     
+    /// Pauses the playback of the player
     private func pause() {
         player.pause()
         isPlaying = false
         playButton.setImage(isPlaying ? UIImage(systemName: "pause.circle") : UIImage(systemName: "play.circle"), for: .normal)
     }
     
+    /// Restarts playback from the beginning
     private func restart() {
         player.seek(to: startTime, toleranceBefore: startTime, toleranceAfter: startTime)
     }
     
+    // Stops player playback
     private func stop() {
         isPlaying = false
         player.pause()
@@ -220,15 +257,18 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
     
     // MARK: - Functions
     
+    /// Sets initial UI state for all visible views.
     private func configureViews() {
         loadCustomVideoButton.isEnabled = !isVideoLoaded
+        
         trimButton.isEnabled = false
         restartButton.isEnabled = false
+        
         playButton.isEnabled = isVideoLoaded
         playButton.setImage(UIImage(systemName: "pause.circle"), for: .normal)
-        playButton.imageView?.frame.size = CGSize(width: 50, height: 50)
-        playButton.frame.size = CGSize(width: 50, height: 50)
+        
         cancelTrimButton.isHidden = true
+        
         shareButton.isHidden = true
     }
     
@@ -237,31 +277,37 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
         asset = AVAsset(url: videoURL)
         playerItem = AVPlayerItem(asset: asset, automaticallyLoadedAssetKeys: ["playable"])
         player = AVPlayer(playerItem: playerItem)
+        
+        // I need this to observe the current playback time of the player
         addPeriodicTimeObserver()
         
         let playerLayer = AVPlayerLayer(player: player)
         playerLayer.frame = playerView.layer.bounds
-        playerLayer.videoGravity = .resizeAspect
+        playerLayer.videoGravity = .resizeAspect // force the video to fit on the specified view
         
         playerView.layer.addSublayer(playerLayer)
         
+        // registering for this notification to update the UI as soon as the player finishes playing.
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: player.currentItem)
         
-        play()
-        
+        // generate the thumbnails and when that's done, start the playback
         generateThumbnails(for: videoURL) {
             self.configureTimelineView()
             self.thumbnailsView.layoutSubviews()
+            self.play()
         }
         
+        // update UI state
         playButton.isEnabled.toggle()
         loadCustomVideoButton.isEnabled = false
         restartButton.isEnabled = true
         trimButton.isEnabled = true
     }
     
+    /// Generates thumbnails for the player timeline
     private func generateThumbnails(for videoUrl: URL, completion: @escaping () -> Void = {}) {
         let video = AVURLAsset(url: videoUrl)
+        
         let imageGenerator = AVAssetImageGenerator(asset: video)
         imageGenerator.appliesPreferredTrackTransform = true
         imageGenerator.apertureMode = .encodedPixels
@@ -274,12 +320,11 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
             DispatchQueue.main.async {
                 let thumbnailImageView = UIImageView(image: UIImage(cgImage: thumbnailImage!))
                 thumbnailImageView.frame.size = CGSize(width: self.thumbnailsView.frame.size.width / CGFloat(10), height: 40)
-                var thumbnailPosition = thumbnailImageView.frame.origin
-                thumbnailPosition.y = 5
-                thumbnailImageView.frame.origin = thumbnailPosition
                 
-                
+                // I'm using an horizontal stackView to layout the images correctly
                 self.thumbnailsView.addArrangedSubview(thumbnailImageView)
+                
+                // controll flow
                 thumbnailsRemaining -= 1
                 if thumbnailsRemaining <= 0 {
                     completion()
@@ -288,6 +333,7 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
         })
     }
     
+    /// Configures and adds the playhead view to the timeline view
     private func configureTimelineView() {
         indicatorView.frame = CGRect(x: 0, y: -2, width: 4, height: 55)
         indicatorView.backgroundColor = .white
@@ -296,6 +342,7 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
         thumbnailsView.addSubview(indicatorView)
     }
     
+    /// Configures the border, left and right handles of the trimming interface
     private func configureTrimmer() {
         trimmerView.frame = CGRect(x: 0, y: 0, width: thumbnailsView.frame.size.width, height: thumbnailsView.frame.size.height)
         trimmerView.backgroundColor = .clear
@@ -318,12 +365,13 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
         
         trimmedStartLabel.isHidden = true
         trimmedEndLabel.isHidden = true
+        
         trimmerView.addSubview(trimmedStartLabel)
         trimmerView.addSubview(trimmedEndLabel)
         thumbnailsView.addSubview(trimmerView)
     }
     
-    func shareVideoFile(_ file: URL) {
+    private func shareVideoFile(_ file: URL) {
         // Create the Array which includes the files you want to share
         var filesToShare = [Any]()
         
@@ -339,30 +387,28 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
     
     // MARK: - Observers
     
+    /// Handle player UI to conform to current time
     private func addPeriodicTimeObserver() {
         // Notify every millisecond
         let timeScale = CMTimeScale(NSEC_PER_SEC)
+        
         let time = CMTime(seconds: 0.01, preferredTimescale: timeScale)
         let width = self.thumbnailsView.frame.width
         
-        
-        
-        timeObserverToken = player.addPeriodicTimeObserver(forInterval: time,
-                                                           queue: .main) {
-            [weak self] time in
-            // update player transport UI
-            
-            if let trimmedEnd = self?.trimmedEnd,
-               time >= trimmedEnd,
-               self?.isTrimming ?? false {
+        timeObserverToken = player.addPeriodicTimeObserver(forInterval: time, queue: .main) { [weak self] time in
+            // check if trimmer is enabled so we should stop playing after the trim end
+            if self?.isTrimming ?? false,
+               let trimmedEnd = self?.trimmedEnd,
+               time >= trimmedEnd {
                 self?.stop()
             }
             
+            // Update the timecode label. In the future i would update this to look like: 00:00:00.00
             self?.currentTimeLabel.text = self?.getCurrentTimeString(time: time.seconds)
+            
             if let duration = self?.endTime.seconds, duration > 0 {
                 self?.indicatorView.frame.origin.x = (width * time.seconds) / duration
             }
-            
         }
     }
     
@@ -372,7 +418,8 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
     
     // MARK: - Helpers
     
-    private func getIntervals(for duration: Double) -> [ NSValue ] {
+    /// Creates an array of CMTime objects for every second of the duration of the video
+    func getIntervals(for duration: Double) -> [ NSValue ] {
         var intervals: [ NSValue ] = []
         for interval in (0...Int(duration.rounded())) {
             intervals.append(CMTime(seconds: Double(interval), preferredTimescale: 60) as NSValue)
@@ -381,7 +428,7 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
         return intervals
     }
     
-    private func getCurrentTimeString(time: Double) -> String {
+    func getCurrentTimeString(time: Double) -> String {
         let (hours, min, sec) = secondsToHoursMinutesSeconds(time)
         return String(format: "%.0f:%.0f:%.2f", hours, min, sec)
     }
@@ -389,6 +436,5 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
     func secondsToHoursMinutesSeconds(_ seconds: Double) -> (Double, Double, Double) {
         return (seconds / 3600, (seconds.truncatingRemainder(dividingBy: 3600)) / 60, (seconds.truncatingRemainder(dividingBy: 3600).truncatingRemainder(dividingBy: 60)))
     }
-    
 }
 
