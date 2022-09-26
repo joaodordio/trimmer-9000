@@ -95,11 +95,16 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
             if x > thumbnailsView.frame.width - 40 { x = thumbnailsView.frame.width - 40 }
             
             let newCenter = CGPoint(x: x, y: leftHandleView.frame.origin.y)
+            trimmedStartLabel.isHidden = false
+            trimmedStartLabel.frame.origin.x = x
             leftHandleView.frame.origin = newCenter
             
             let timeToSeek = (x * endTime.seconds) / thumbnailsView.frame.width
+            trimmedStartLabel.text = String(format: "%.2fs", timeToSeek)
             
             trimmedStart = CMTime(seconds: timeToSeek, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        } else if gestureRecognizer.state == .ended {
+            trimmedStartLabel.isHidden = true
         }
     }
     
@@ -113,11 +118,17 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
             if x > thumbnailsView.frame.width - 40 { x = thumbnailsView.frame.width - 40 }
             
             let newCenter = CGPoint(x: x, y: rightHandleView.frame.origin.y)
+            trimmedEndLabel.isHidden = false
+            trimmedEndLabel.frame.origin.x = x
+            
             rightHandleView.frame.origin = newCenter
             
             let timeToSeek = (x * endTime.seconds) / thumbnailsView.frame.width
+            trimmedEndLabel.text = String(format: "%.2fs", timeToSeek)
             
             trimmedEnd = CMTime(seconds: timeToSeek, preferredTimescale: CMTimeScale(NSEC_PER_SEC))
+        } else if gestureRecognizer.state == .ended {
+            trimmedEndLabel.isHidden = true
         }
     }
     
@@ -155,29 +166,21 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
     @IBAction func shareVideo(_ sender: Any) {
         guard let outputVideoURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("trimmed.mov") else { return }
         
-        let trimmedVideoComposition = AVMutableVideoComposition(asset: playerItem.asset) { _ in }
-        
-        //Create trim range
         let timeRange = CMTimeRangeFromTimeToTime(start: trimmedStart, end: trimmedEnd)
         
-        //delete any old file
         do {
             try FileManager.default.removeItem(at: outputVideoURL)
         } catch {
             print("Could not remove file \(error.localizedDescription)")
         }
         
-        //create exporter
         let exporter = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetHighestQuality)
         
-        //configure exporter
-        exporter?.videoComposition = trimmedVideoComposition
         exporter?.outputURL = outputVideoURL
         exporter?.outputFileType = .mov
         exporter?.timeRange = timeRange
         
-        //export!
-        exporter?.exportAsynchronously(completionHandler: { [weak exporter] in
+        exporter?.exportAsynchronously {
             DispatchQueue.main.async {
                 if let error = exporter?.error {
                     print("failed \(error.localizedDescription)")
@@ -185,8 +188,7 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
                     self.shareVideoFile(outputVideoURL)
                 }
             }
-            
-        })
+        }
     }
     // MARK: - Player Actions
     
@@ -220,6 +222,7 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
     
     private func configureViews() {
         loadCustomVideoButton.isEnabled = !isVideoLoaded
+        trimButton.isEnabled = false
         restartButton.isEnabled = false
         playButton.isEnabled = isVideoLoaded
         playButton.setImage(UIImage(systemName: "pause.circle"), for: .normal)
@@ -249,12 +252,12 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
         generateThumbnails(for: videoURL) {
             self.configureTimelineView()
             self.thumbnailsView.layoutSubviews()
-            print("Configuring timelineview")
         }
         
         playButton.isEnabled.toggle()
         loadCustomVideoButton.isEnabled = false
         restartButton.isEnabled = true
+        trimButton.isEnabled = true
     }
     
     private func generateThumbnails(for videoUrl: URL, completion: @escaping () -> Void = {}) {
@@ -267,10 +270,8 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
         var thumbnailsRemaining = video.duration.seconds.rounded()
         
         imageGenerator.generateCGImagesAsynchronously(forTimes: getIntervals(for: video.duration.seconds), completionHandler: { (time, thumbnailImage, secondTime, result, error) in
-            print("got result from CGImages for: \(thumbnailsRemaining) images")
             
             DispatchQueue.main.async {
-                print("generating thumbnail")
                 let thumbnailImageView = UIImageView(image: UIImage(cgImage: thumbnailImage!))
                 thumbnailImageView.frame.size = CGSize(width: self.thumbnailsView.frame.size.width / CGFloat(10), height: 40)
                 var thumbnailPosition = thumbnailImageView.frame.origin
@@ -280,7 +281,6 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
                 
                 self.thumbnailsView.addArrangedSubview(thumbnailImageView)
                 thumbnailsRemaining -= 1
-                print("\(thumbnailsRemaining) remaining images")
                 if thumbnailsRemaining <= 0 {
                     completion()
                 }
@@ -289,7 +289,7 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
     }
     
     private func configureTimelineView() {
-        indicatorView.frame = CGRect(x: 0, y: 2, width: 4, height: 45)
+        indicatorView.frame = CGRect(x: 0, y: -2, width: 4, height: 55)
         indicatorView.backgroundColor = .white
         indicatorView.layer.cornerRadius = 2
         
@@ -358,10 +358,8 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
                 self?.stop()
             }
             
-            self?.currentTimeLabel.text = self?.getCurrentTimeString(time: time.seconds.rounded())
+            self?.currentTimeLabel.text = self?.getCurrentTimeString(time: time.seconds)
             if let duration = self?.endTime.seconds, duration > 0 {
-                print("time.seconds: \(time.seconds)")
-                print("position: \((width * time.seconds) / duration)")
                 self?.indicatorView.frame.origin.x = (width * time.seconds) / duration
             }
             
@@ -384,12 +382,12 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
     }
     
     private func getCurrentTimeString(time: Double) -> String {
-        let (hours, min, sec) = secondsToHoursMinutesSeconds(Int(time))
-        return String("\(hours):\(min):\(sec)")
+        let (hours, min, sec) = secondsToHoursMinutesSeconds(time)
+        return String(format: "%.0f:%.0f:%.2f", hours, min, sec)
     }
     
-    func secondsToHoursMinutesSeconds(_ seconds: Int) -> (Int, Int, Int) {
-        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    func secondsToHoursMinutesSeconds(_ seconds: Double) -> (Double, Double, Double) {
+        return (seconds / 3600, (seconds.truncatingRemainder(dividingBy: 3600)) / 60, (seconds.truncatingRemainder(dividingBy: 3600).truncatingRemainder(dividingBy: 60)))
     }
     
 }
