@@ -35,7 +35,7 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" buttonSize="large">
                                                     <imageReference key="image" image="restart.circle" catalog="system" symbolScale="large"/>
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large" weight="bold"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30" scale="large" weight="bold"/>
                                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </buttonConfiguration>
                                                 <connections>
@@ -50,7 +50,7 @@
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" buttonSize="large">
                                                     <imageReference key="image" image="play.circle" catalog="system" symbolScale="large"/>
-                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large" weight="bold"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30" scale="large" weight="bold"/>
                                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </buttonConfiguration>
                                                 <connections>
@@ -107,44 +107,46 @@
                                     <action selector="enableTrimmer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="CIc-zr-Wm6"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DFd-lm-P6U">
-                                <rect key="frame" x="256" y="755" width="51" height="54"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHa-3T-bZc">
+                                <rect key="frame" x="16" y="775" width="77" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="">
-                                    <imageReference key="image" image="square.and.arrow.up.circle" catalog="system" symbolScale="large"/>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large" weight="black"/>
-                                    <color key="baseForegroundColor" systemColor="systemGreenColor"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Cancel">
+                                    <color key="baseForegroundColor" systemColor="labelColor"/>
+                                    <color key="baseBackgroundColor" systemColor="systemRedColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="cancelTrim:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MTf-6r-MNV"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DFd-lm-P6U">
+                                <rect key="frame" x="289" y="775" width="85" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Share" buttonSize="large">
+                                    <color key="baseForegroundColor" systemColor="labelColor"/>
+                                    <color key="baseBackgroundColor" systemColor="systemGreenColor"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="shareVideo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tEm-HJ-LW6"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHa-3T-bZc">
-                                <rect key="frame" x="56" y="765" width="77" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" title="Cancel"/>
-                                <connections>
-                                    <action selector="cancelTrim:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MTf-6r-MNV"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottomMargin" secondItem="DFd-lm-P6U" secondAttribute="bottom" constant="1" id="134-Ii-35O"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="DFd-lm-P6U" secondAttribute="bottom" id="134-Ii-35O"/>
                             <constraint firstItem="W7Z-CS-3yX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="25" id="B87-qd-Qs8"/>
                             <constraint firstItem="gUx-Qt-OoF" firstAttribute="top" secondItem="NGS-oT-7gb" secondAttribute="bottom" constant="-188" id="MEE-RJ-9xO"/>
                             <constraint firstItem="gUx-Qt-OoF" firstAttribute="trailing" secondItem="NGS-oT-7gb" secondAttribute="trailing" id="Qb1-a5-OGn"/>
                             <constraint firstItem="NGS-oT-7gb" firstAttribute="trailing" secondItem="TTC-uD-jct" secondAttribute="trailing" id="TbY-cD-7Ns"/>
                             <constraint firstItem="t8c-MP-mKy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TeD-B7-QMN"/>
-                            <constraint firstItem="DFd-lm-P6U" firstAttribute="top" secondItem="NGS-oT-7gb" secondAttribute="bottom" constant="22" id="UB7-rI-vVa"/>
+                            <constraint firstItem="DFd-lm-P6U" firstAttribute="top" secondItem="NGS-oT-7gb" secondAttribute="bottom" constant="42" id="UB7-rI-vVa"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TTC-uD-jct" secondAttribute="trailing" constant="20" id="VvI-qa-OuI"/>
                             <constraint firstItem="TTC-uD-jct" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Yok-it-vMf"/>
                             <constraint firstItem="W7Z-CS-3yX" firstAttribute="centerX" secondItem="t8c-MP-mKy" secondAttribute="centerX" id="aHD-D2-bbh"/>
                             <constraint firstItem="t8c-MP-mKy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="dVz-dX-iaD"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="t8c-MP-mKy" secondAttribute="trailing" constant="20" id="fC4-fk-Il5"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DFd-lm-P6U" secondAttribute="trailing" constant="83" id="hL1-d3-Xhs"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DFd-lm-P6U" secondAttribute="trailing" constant="16" id="hL1-d3-Xhs"/>
                             <constraint firstItem="gUx-Qt-OoF" firstAttribute="leading" secondItem="NGS-oT-7gb" secondAttribute="leading" id="iho-qs-FVl"/>
                             <constraint firstItem="NGS-oT-7gb" firstAttribute="top" secondItem="TTC-uD-jct" secondAttribute="bottom" constant="53" id="n4s-CO-ZyP"/>
                             <constraint firstAttribute="bottom" secondItem="t8c-MP-mKy" secondAttribute="bottom" constant="307" id="p0W-oa-dsR"/>
@@ -178,13 +180,18 @@
     <resources>
         <image name="play.circle" catalog="system" width="128" height="123"/>
         <image name="restart.circle" catalog="system" width="128" height="123"/>
-        <image name="square.and.arrow.up.circle" catalog="system" width="128" height="123"/>
         <image name="timeline.selection" catalog="system" width="128" height="67"/>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF33228728E12763001108C3 /* TrimHandleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = CF33228628E12763001108C3 /* TrimHandleView.xib */; };
+		CF33228928E12878001108C3 /* TrimHandleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF33228828E12878001108C3 /* TrimHandleView.swift */; };
 		CF37593D28D3B2D1007EA29F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF37593C28D3B2D1007EA29F /* AppDelegate.swift */; };
 		CF37593F28D3B2D1007EA29F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF37593E28D3B2D1007EA29F /* SceneDelegate.swift */; };
 		CF37594128D3B2D1007EA29F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF37594028D3B2D1007EA29F /* ViewController.swift */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CF33228628E12763001108C3 /* TrimHandleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrimHandleView.xib; sourceTree = "<group>"; };
+		CF33228828E12878001108C3 /* TrimHandleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrimHandleView.swift; sourceTree = "<group>"; };
 		CF37593928D3B2D1007EA29F /* Trimmer 9000.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Trimmer 9000.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF37593C28D3B2D1007EA29F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CF37593E28D3B2D1007EA29F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -62,10 +66,12 @@
 				CF37593C28D3B2D1007EA29F /* AppDelegate.swift */,
 				CF37593E28D3B2D1007EA29F /* SceneDelegate.swift */,
 				CF37594028D3B2D1007EA29F /* ViewController.swift */,
+				CF33228628E12763001108C3 /* TrimHandleView.xib */,
 				CF37594228D3B2D1007EA29F /* Main.storyboard */,
 				CF37594528D3B2D3007EA29F /* Assets.xcassets */,
 				CF37594728D3B2D3007EA29F /* LaunchScreen.storyboard */,
 				CF37594A28D3B2D3007EA29F /* Info.plist */,
+				CF33228828E12878001108C3 /* TrimHandleView.swift */,
 			);
 			path = "Trimmer 9000";
 			sourceTree = "<group>";
@@ -132,6 +138,7 @@
 				CF37594928D3B2D3007EA29F /* LaunchScreen.storyboard in Resources */,
 				CF37594628D3B2D3007EA29F /* Assets.xcassets in Resources */,
 				CF37594428D3B2D1007EA29F /* Main.storyboard in Resources */,
+				CF33228728E12763001108C3 /* TrimHandleView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +151,7 @@
 			files = (
 				CF37594128D3B2D1007EA29F /* ViewController.swift in Sources */,
 				CF37593D28D3B2D1007EA29F /* AppDelegate.swift in Sources */,
+				CF33228928E12878001108C3 /* TrimHandleView.swift in Sources */,
 				CF37593F28D3B2D1007EA29F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

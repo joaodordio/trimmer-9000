@@ -23,8 +23,11 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
     
     let indicatorView = UIView()
     let trimmerView = UIView()
-    let leftHandleView = UIView()
-    let rightHandleView = UIView()
+    let leftHandleView = TrimHandleView(orientation: .left)
+    let rightHandleView = TrimHandleView(orientation: .right)
+    
+    let trimmedStartLabel = UILabel()
+    let trimmedEndLabel = UILabel()
     
     var player: AVPlayer!
     var asset: AVAsset!
@@ -298,27 +301,8 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
         trimmerView.backgroundColor = .clear
         trimmerView.layer.borderColor = UIColor.systemYellow.cgColor
         trimmerView.layer.borderWidth = 5
-        
-        var imageFrame = CGRectZero
-        
-        leftHandleView.frame = CGRect(x: 0, y: 0, width: 40, height: 50)
-        leftHandleView.backgroundColor = .systemYellow
-        let leftArrowView = UIImageView(image: UIImage(systemName: "arrow.backward.to.line")!)
-        imageFrame = leftArrowView.frame
-        imageFrame.origin.y = (trimmerView.frame.height / 2 ) - (imageFrame.height / 2)
-        leftArrowView.frame = imageFrame
-        leftArrowView.tintColor = .black
-        leftHandleView.addSubview(leftArrowView)
-        
+  
         rightHandleView.frame = CGRect(x: thumbnailsView.frame.size.width - 40, y: 0, width: 40, height: 50)
-        rightHandleView.backgroundColor = .systemYellow
-        let rightArrowView = UIImageView(image: UIImage(systemName: "arrow.right.to.line")!)
-        rightArrowView.tintColor = .black
-        imageFrame = rightArrowView.frame
-        imageFrame.origin.y = (trimmerView.frame.height / 2 ) - (imageFrame.height / 2)
-        rightArrowView.frame = imageFrame
-        rightHandleView.addSubview(rightArrowView)
-        
         
         let leftGesture = UIPanGestureRecognizer(target: self, action: #selector(trimLeft))
         leftHandleView.addGestureRecognizer(leftGesture)
@@ -329,6 +313,13 @@ class ViewController: UIViewController /*, PHPickerViewControllerDelegate */ {
         trimmerView.addSubview(leftHandleView)
         trimmerView.addSubview(rightHandleView)
         
+        trimmedStartLabel.frame = CGRect(origin: CGPoint(x: 0, y: -20), size: CGSize(width: 100, height: 20))
+        trimmedEndLabel.frame = CGRect(origin: CGPoint(x: trimmerView.frame.size.width, y: -20), size: CGSize(width: 100, height: 20))
+        
+        trimmedStartLabel.isHidden = true
+        trimmedEndLabel.isHidden = true
+        trimmerView.addSubview(trimmedStartLabel)
+        trimmerView.addSubview(trimmedEndLabel)
         thumbnailsView.addSubview(trimmerView)
     }
     
